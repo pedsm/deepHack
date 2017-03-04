@@ -78,10 +78,19 @@ for l in range(100):
 
     correct = 0
     for i in range(len(data)):
-        prediction = round(z*(x*((a * likes) + (b * comments)) + (c*c * tags)))
-
+        likes = inLikes[i]
+        comments = inComments[i]
+        tags = inTags[i]
+        prediction = (z*(x*((a * likes) + (b * comments)) + (c*c * tags)))
         expected = inExpected[i]
-        if prediction == expected:
+
+        # print((data[i]["name"]).encode('utf-8'))
+        print("Prediction " + str(prediction))
+        # print("Lets go boyz")
+        print("%f*(%f*((%f * %f) + (%f * %f)) + (%f*%f * %f))"%(z,x,a,likes,b,comments,c,c,tags))
+        # print(str(z,x,a,b,c)
+
+        if round(prediction) == expected:
             correct += 1
 
     c = correct/float(len(data))
