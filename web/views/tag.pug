@@ -14,7 +14,7 @@ block container
         th Number of Likes
         th Number of Awards
     tbody
-      each project in tagProjects.slice(0, 10)
+      each project in tagTopProjects.slice(0, 10)
         tr
           td
             - var project_url = "https://devpost.com/software/" + project.id

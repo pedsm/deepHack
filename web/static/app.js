@@ -22,6 +22,13 @@ var granimInstance = new Granim({
 // Charting
 //
 
+function handleChartClick(evt) {
+    var activeElement = myChart.getElementAtEvent(evt);
+    var index = activeElement[0]._index;
+    var url = "/tags/" + popularTags[index]._id;
+
+    window.location.replace(url);
+}
 
 // Chart.js
 var ctx = document.getElementById("recent-hacks");
@@ -45,7 +52,8 @@ var myChart = new Chart(ctx, {
                     beginAtZero:true
                 }
             }]
-        }
+        },
+        onClick: handleChartClick
     }
 });
 
