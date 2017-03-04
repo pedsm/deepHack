@@ -1,6 +1,7 @@
 var mongo = require('mongodb'),
     assert = require('assert'),
-    collection = null
+    collection = null,
+    rate = require('./score.js').rate
 
 // Mongo setup
 var MongoClient = mongo.MongoClient
@@ -47,7 +48,13 @@ var getRelatedTags = function(tag_name, callback) {
 var getProjectsWithTags = function(tag_name, callback) {
     var mres = collection.find({tags: {$in: [tag_name]}})
         .sort({"num_likes": -1});
-    mres.toArray((err, documents) => callback(documents));
+    mres.toArray((err, documents) => {
+        documents.forEach((document)=>
+            {
+                document.rating = rate(document.num_likes, document.num_comments, document.tags.length)
+            })
+            callback(documents)
+    });
 }
 
 var getTagSuccessRate = function(tag_name, callback) {

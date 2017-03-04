@@ -1,8 +1,9 @@
 var express = require('express'),
     pug = require('pug'),
     mongo = require('mongodb'),
-    assert = require('assert')
-    mpipelines = require('./mongopipelines')
+    assert = require('assert'),
+    mpipelines = require('./mongopipelines'),
+    score = require('./score.js').rate()
 
 var app = express();
 app.locals.pretty = true;
@@ -20,6 +21,7 @@ app.get('/tags/:tag', function(req, res) {
         mpipelines.getRelatedTags(req.params.tag, function(relatedTags) {
             mpipelines.getTagSuccessRate(req.params.tag, function(tagSuccessRate){
                 tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
+                console.log(tagProjects[0].rating)
                 res.render('tag',
                     {
                         tagName: req.params.tag,
