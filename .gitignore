@@ -3,3 +3,6 @@
 experiments/logs/*
 output/
 *scssc
+venv/
+experiments/node_modules
+*.log
