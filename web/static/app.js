@@ -33,7 +33,7 @@ function handleChartClick(evt) {
 // Chart.js
 var ctx = document.getElementById("recent-hacks");
 var tagctx = document.getElementById("tagAwardRate")
-console.log(tagctx);
+
 if (ctx) {
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -76,11 +76,17 @@ var dodata = {
                 "#36A2EB",
                 "#FFCE56"
             ]
-        }]
+        }],
 };
 
 var myDoughnutChart = new Chart(tagctx, {
     type: 'doughnut',
-    data: dodata
+    data: dodata,
+    options: {
+        title: {
+            display: true,
+            text: "Number of prizes won"
+        }
+    }
 });
 
