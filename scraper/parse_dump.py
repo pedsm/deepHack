@@ -55,5 +55,5 @@ if __name__ == '__main__':
     j = p.map(process_project, enumerate(projects[:1000]))
     print "Creating json file"
     with open(OUTPUT_FNAME, "w+") as f:
-        f.write(json.dump(j))
+        f.write(json.dumps(j))
 

@@ -5,3 +5,4 @@ output/
 venv/
 experiments/node_modules
 *.log
+*scssc
