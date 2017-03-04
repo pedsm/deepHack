@@ -2,3 +2,6 @@
 /tf/
 experiments/logs/*
 output/
+venv/
+experiments/node_modules
+*.log
