@@ -27,6 +27,27 @@ var popularTagsPipeline = function(callback) {
     );
 }
 
+// Tag over the last year
+var tagTrendsPipeline = function(tag_name, callback) {
+    collection.aggregate(
+            [
+            { "$match"  : { tags : { $in : [tag_name]}}},
+            { "$project": { "_id": 0,
+                monthSubstring: { $substr: [ "$timestamp", 0, 7 ] },
+            }},
+            { "$group"  : { "_id": "$monthSubstring", "count": {"$sum": 1} } },
+            { "$sort"   : { "_id": -1 }},
+            { "$limit"  : 24 },
+            { "$sort"   : { "_id": 1 }}
+            ],
+            function(err, results) {
+                assert.equal(err, null);
+                callback(results);
+            }
+    );
+}
+
+
 // Return a list of similar tags
 var getRelatedTags = function(tag_name, callback) {
     collection.aggregate(
@@ -95,5 +116,5 @@ var getSearchResults = function(query, callback)
 }
 
 
-module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate, getSearchResults}
+module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate, getSearchResults, tagTrendsPipeline}
 

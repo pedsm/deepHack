@@ -20,17 +20,19 @@ app.get('/tags/:tag', function(req, res) {
     mpipelines.getProjectsWithTags(req.params.tag, function(tagProjects) {
         mpipelines.getRelatedTags(req.params.tag, function(relatedTags) {
             mpipelines.getTagSuccessRate(req.params.tag, function(tagSuccessRate){
-                tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
-                // console.log(tagProjects[0].rating)
-                res.render('tag',
-                    {
-                        tagName: req.params.tag,
-                        tagPopularity: tagProjects.length,
-                        tagTopProjects: tagProjects,
-                        tagRelatedTags: relatedTags,
-                        tagSuccessRate: tagSuccessRate
-                    }
-                );
+                mpipelines.tagTrendsPipeline('javascript', function(trends) {
+                    tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
+                    res.render('tag',
+                        {
+                            tagName: req.params.tag,
+                            tagPopularity: tagProjects.length,
+                            tagTopProjects: tagProjects,
+                            tagRelatedTags: relatedTags,
+                            tagSuccessRate: tagSuccessRate,
+                            tagTrenddata: trends
+                        }
+                    );
+                });
             });
         });
     });

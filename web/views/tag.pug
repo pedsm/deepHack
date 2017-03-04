@@ -12,7 +12,7 @@ block container
     div.seven.columns
       div.chart-container
         canvas#tagTimedPopularity
-        script!="var tagTimedPopularity = " + []
+        script!="var tagTimedPopularity = " + JSON.stringify(tagTrenddata)
       br
       p Related tags: 
         each relatedTag, index in tagRelatedTags.slice(1)

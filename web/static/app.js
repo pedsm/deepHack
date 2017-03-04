@@ -94,7 +94,7 @@ var myDoughnutChart = new Chart(tagctx, {
 
 var popctx = document.getElementById("tagTimedPopularity");
 var popdata = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: tagTimedPopularity.map((x)=>x._id),
     datasets: [
         {
             label: "Usage over time",
@@ -115,7 +115,7 @@ var popdata = {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: tagTimedPopularity.map((x)=>x.count),
             spanGaps: false,
         }
     ]
