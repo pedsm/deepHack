@@ -50,7 +50,11 @@ def process_project(inp):
         # We are coing to skip non hackathon hacks for now
         return None
 
-    proj_data['timestamp'] = proj_html.find('time').get('datetime')
+    proj_data['timestamp'] = proj_html.find('time')
+    if proj_data['timestamp'] is not None:
+        proj_data['timestamp'] = proj_data['timestamp'].get('datetime')
+    else:
+        return None
 
     return proj_data
 
