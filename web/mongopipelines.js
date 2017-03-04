@@ -71,5 +71,22 @@ var getTagSuccessRate = function(tag_name, callback) {
   );
 }
 
-module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate}
+var getSearchResults = function(query, callback)
+{
+    // var regex = "/" + query + "/"
+    var regex = new RegExp(query,'i') 
+    var query = collection.find({name:regex})
+    query.toArray((err,documents)=>
+        {
+            if(err)
+                throw err
+            documents.forEach((document)=>
+            {
+                document.rating = rate(document.num_likes, document.num_comments, document.tags.length)
+            })
+            callback(documents)
+        })
+}
+
+module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate, getSearchResults}
 

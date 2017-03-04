@@ -16,7 +16,7 @@ html
     div.container
       script.
         function performsearch() { window.location.replace(
-          "/tags/" + document.getElementById("search-box").value
+          "/q/" + document.getElementById("search-box").value
         ); return false}
 
       form#search-form(onsubmit="return performsearch()")
