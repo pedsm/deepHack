@@ -4,6 +4,7 @@
 import os
 import json
 from multiprocessing import Pool
+import multiprocessing
 from bs4 import BeautifulSoup
 
 OUTPUT_FNAME="devpostdump.json"
