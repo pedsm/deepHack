@@ -50,5 +50,19 @@ var getProjectsWithTags = function(tag_name, callback) {
     mres.toArray((err, documents) => callback(documents));
 }
 
-module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags}
+var getTagSuccessRate = function(tag_name, callback) {
+  collection.aggregate(
+      [ { "$match"  : { tags : { $in : [tag_name]}}},
+        { "$project": { "_id": 0, "num_prizes": 1 } },
+        { "$group"  : { "_id": "$num_prizes", "count": {"$sum":  1} } },
+        { "$sort"   : {"count" : -1 } }
+      ],
+      function(err, results) {
+        assert.equal(err, null);
+        callback(results);
+      }
+  );
+}
+
+module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate}
 

@@ -62,14 +62,10 @@ var myChart = new Chart(ctx, {
 }
 
 var dodata = {
-    labels: [
-        "Red",
-        "Blue",
-        "Yellow"
-    ],
+    labels: tagSuccessRate.map((x)=>x._id),
     datasets: [
         {
-            data: [300, 50, 100],
+            data: tagSuccessRate.map((x)=>x.count),
             backgroundColor: [
                 "#FF6384",
                 "#36A2EB",

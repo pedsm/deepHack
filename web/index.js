@@ -18,14 +18,18 @@ app.get('/', function (req, res) {
 app.get('/tags/:tag', function(req, res) {
     mpipelines.getProjectsWithTags(req.params.tag, function(tagProjects) {
         mpipelines.getRelatedTags(req.params.tag, function(relatedTags) {
-            res.render('tag',
-                {
-                    tagName: req.params.tag,
-                    tagPopularity: tagProjects.length,
-                    tagTopProjects: tagProjects,
-                    tagRelatedTags: relatedTags
-                }
-            );
+            mpipelines.getTagSuccessRate(req.params.tag, function(tagSuccessRate){
+                tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
+                res.render('tag',
+                    {
+                        tagName: req.params.tag,
+                        tagPopularity: tagProjects.length,
+                        tagTopProjects: tagProjects,
+                        tagRelatedTags: relatedTags,
+                        tagSuccessRate: tagSuccessRate
+                    }
+                );
+            });
         });
     });
 });

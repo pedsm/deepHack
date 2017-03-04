@@ -8,6 +8,7 @@ block container
     div.five.columns
       div.chart-container
         canvas#tagAwardRate
+        script!="var tagSuccessRate = " + JSON.stringify(tagSuccessRate)
     div.seven.columns
         p Related tags: 
         each relatedTag, index in tagRelatedTags.slice(1)
