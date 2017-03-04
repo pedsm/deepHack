@@ -44,8 +44,14 @@ app.get('/tags/:tag', function(req, res) {
     MongoClient.connect(mongo_url, function(err, db) {
         assert.equal(null, err);
         var collection = db.collection('hacks');
-        var mres = collection.find({tags: {$in: [req.params.tag]}});
-        mres.toArray((err, documents) => res.render('tag', {tagData:documents}));
+        var mres = collection.find({tags: {$in: [req.params.tag]}})
+            .sort({"num_likes": -1});
+        mres.toArray((err, documents) => res.render('tag',
+                    {
+                        tagName: req.params.tag,
+                        tagPopularity: documents.length,
+                        tagProjects: documents
+                    }));
     });
 
 });
