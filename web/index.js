@@ -20,7 +20,7 @@ app.get('/tags/:tag', function(req, res) {
     mpipelines.getProjectsWithTags(req.params.tag, function(tagProjects) {
         mpipelines.getRelatedTags(req.params.tag, function(relatedTags) {
             mpipelines.getTagSuccessRate(req.params.tag, function(tagSuccessRate){
-                mpipelines.tagTrendsPipeline('javascript', function(trends) {
+                mpipelines.tagTrendsPipeline(req.params.tag, function(trends) {
                     tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
                     res.render('tag',
                         {
