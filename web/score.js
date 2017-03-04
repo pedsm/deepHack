@@ -14,4 +14,5 @@ function rate(iLikes,iComments,iTags)
     return z * (x * ((a * likes) + (b * comments)) + (c * c * tags));
 }
 
+
 module.exports = {rate}
