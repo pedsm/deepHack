@@ -46,6 +46,9 @@ def process_project(inp):
     if hackathon_deets:
         proj_data['hackathon_name'] = hackathon_deets.find('a').string
         proj_data['num_prizes'] = len(hackathon_deets.find_all('span', { 'class' : 'winner' }))
+    else:
+        proj_data['hackathon_name'] = 0
+        proj_data['num_prizes'] = 0
 
     return proj_data
 
