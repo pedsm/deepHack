@@ -1,0 +1,23 @@
+html
+  head
+    title DeepHack - Explore hackathon projects
+    link(href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css')
+    link(rel="stylesheet" type="text/css" href="/static/normalize.css")
+    link(rel="stylesheet" type="text/css" href="/static/skeleton.css")
+    link(rel="stylesheet" type="text/css" href="/static/app.css")
+  body
+    div.chart-container
+      canvas#nav-canvas
+    div.navbar
+      div.container
+        img(src="/static/brainlogo.png")
+
+    
+    div.container
+      block container
+
+    script!="var popularTags = " + JSON.stringify(popularTags)
+    script(src="/static/granim.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js")
+    script(src="/static/app.js")
+

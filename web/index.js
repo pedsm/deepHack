@@ -5,17 +5,11 @@ var express = require('express'),
 
 var app = express();
 app.locals.pretty = true;
+app.set('view engine', 'pug')
 
 // Mongo setup
 var MongoClient = mongo.MongoClient
 var mongo_url = "mongodb://localhost:27017/deephack"
-
-//MongoClient.connect(mongo_url, function(err, db) {
-  //assert.equal(null, err);
-  //popularTagsPipeline(db, function(results) {
-    //db.close();
-  //});
-//});
 
 // Get list of top 10 tags
 var popularTagsPipeline = function(db, callback) {
@@ -34,7 +28,7 @@ var popularTagsPipeline = function(db, callback) {
   );
 }
 
-app.set('view engine', 'pug')
+app.use('/static', express.static('static'))
 
 app.get('/', function (req, res) {
     MongoClient.connect(mongo_url, function(err, db) {
@@ -46,7 +40,16 @@ app.get('/', function (req, res) {
     });
 })
 
-app.use('/static', express.static('static'))
+app.get('/tags/:tag', function(req, res) {
+    MongoClient.connect(mongo_url, function(err, db) {
+        assert.equal(null, err);
+        var collection = db.collection('hacks');
+        var mres = collection.find({tags: {$in: [req.params.tag]}});
+        mres.toArray((err, documents) => res.render('tag', {tagData:documents}));
+    });
+
+});
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
