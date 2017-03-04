@@ -13,35 +13,35 @@ MongoClient.connect(mongo_url, function(err, db) {
 
 // Get list of top 10 tags
 var popularTagsPipeline = function(callback) {
-  collection.aggregate(
-      [ { "$project": { "_id": 0, "tags": 1 } },
-        { "$unwind" : "$tags" },
-        { "$group"  : { "_id": "$tags", "count": {"$sum":  1} } },
-        { "$sort"   : {"count" : -1 } },
-        { "$limit"  : 10 }
-      ],
-      function(err, results) {
-        assert.equal(err, null);
-        callback(results);
-      }
-  );
+    collection.aggregate(
+        [ { "$project": { "_id": 0, "tags": 1 } },
+            { "$unwind" : "$tags" },
+            { "$group"  : { "_id": "$tags", "count": {"$sum":  1} } },
+            { "$sort"   : {"count" : -1 } },
+            { "$limit"  : 10 }
+        ],
+        function(err, results) {
+            assert.equal(err, null);
+            callback(results);
+        }
+    );
 }
 
 // Return a list of similar tags
 var getRelatedTags = function(tag_name, callback) {
-  collection.aggregate(
-      [ { "$match"  : { tags : { $in : [tag_name]}}},
-        { "$project": { "_id": 0, "tags": 1 } },
-        { "$unwind" : "$tags" },
-        { "$group"  : { "_id": "$tags", "count": {"$sum":  1} } },
-        { "$sort"   : {"count" : -1 } },
-        { "$limit"  : 10 }
-      ],
-      function(err, results) {
-        assert.equal(err, null);
-        callback(results);
-      }
-  );
+    collection.aggregate(
+        [ { "$match"  : { tags : { $in : [tag_name]}}},
+            { "$project": { "_id": 0, "tags": 1 } },
+            { "$unwind" : "$tags" },
+            { "$group"  : { "_id": "$tags", "count": {"$sum":  1} } },
+            { "$sort"   : {"count" : -1 } },
+            { "$limit"  : 10 }
+        ],
+        function(err, results) {
+            assert.equal(err, null);
+            callback(results);
+        }
+    );
 };
 
 // Get the list of projects associated with a tag in decending popularity
@@ -53,40 +53,47 @@ var getProjectsWithTags = function(tag_name, callback) {
             {
                 document.rating = rate(document.num_likes, document.num_comments, document.tags.length)
             })
-            callback(documents)
+        callback(documents)
     });
 }
 
 var getTagSuccessRate = function(tag_name, callback) {
-  collection.aggregate(
-      [ { "$match"  : { tags : { $in : [tag_name]}}},
-        { "$project": { "_id": 0, "num_prizes": 1 } },
-        { "$group"  : { "_id": "$num_prizes", "count": {"$sum":  1} } },
-        { "$sort"   : {"count" : -1 } }
-      ],
-      function(err, results) {
-        assert.equal(err, null);
-        callback(results);
-      }
-  );
+    collection.aggregate(
+        [ { "$match"  : { tags : { $in : [tag_name]}}},
+            { "$project": { "_id": 0, "num_prizes": 1 } },
+            { "$group"  : { "_id": "$num_prizes", "count": {"$sum":  1} } },
+            { "$sort"   : {"count" : -1 } }
+        ],
+        function(err, results) {
+            assert.equal(err, null);
+            callback(results);
+        }
+    );
 }
 
 var getSearchResults = function(query, callback)
 {
     // var regex = "/" + query + "/"
-    var regex = new RegExp(query,'i') 
-    var query = collection.find({name:regex})
-    query.toArray((err,documents)=>
+    var regex = new RegExp(query,'i')
+    var arr = [] 
+    arr.push(query)
+    collection.find({name:regex}).toArray((err,documents)=>
         {
             if(err)
                 throw err
             documents.forEach((document)=>
-            {
-                document.rating = rate(document.num_likes, document.num_comments, document.tags.length)
-            })
-            callback(documents)
+                {
+                    document.rating = rate(document.num_likes, document.num_comments, document.tags.length)
+                })
+            collection.find({tags:{$in:arr}}).toArray((err,results)=>
+                {
+                    if(err)
+                        throw err
+                    callback(documents,results)
+                })
         })
 }
+
 
 module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate, getSearchResults}
 

@@ -38,9 +38,12 @@ app.get('/tags/:tag', function(req, res) {
 
 app.get('/q/:q',(req,res)=>{
     var q = req.params.q;
-    mpipelines.getSearchResults(q,(data)=>
+    mpipelines.getSearchResults(q,(data,tags)=>
         {
-            res.render('search',{projects:data,q:q})
+            if(tags.length > 0)
+                res.redirect('/tags/'+q)
+            else
+                res.render('search',{projects:data,q:q})
         })
 })
 
