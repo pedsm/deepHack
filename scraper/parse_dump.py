@@ -51,5 +51,8 @@ def process_project(inp):
 if __name__ == '__main__':
     num_cores = multiprocessing.cpu_count()
     p = Pool(num_cores)
-    json = p.map(process_project, enumerate(projects[:1000]))
+    j = p.map(process_project, enumerate(projects[:1000]))
+    print "Creating json file"
+    with open(OUTPUT_FNAME, "w+") as f:
+        f.write(json.dump(j))
 
