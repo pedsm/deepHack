@@ -13,9 +13,13 @@ html
         a(href="/")
           img(src="/static/brainlogo.png")
 
-    
     div.container
-      form
+      script.
+        function performsearch() { window.location.replace(
+          "/tags/" + document.getElementById("search-box").value
+        ); return false}
+
+      form#search-form(onsubmit="return performsearch()")
         div.row
           div.twelve.columns
             input#search-box.u-full-width(type="text" placeholder="Search...")

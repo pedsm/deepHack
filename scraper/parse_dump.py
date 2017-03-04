@@ -47,15 +47,18 @@ def process_project(inp):
         proj_data['hackathon_name'] = hackathon_deets.find('a').string
         proj_data['num_prizes'] = len(hackathon_deets.find_all('span', { 'class' : 'winner' }))
     else:
-        proj_data['hackathon_name'] = 0
-        proj_data['num_prizes'] = 0
+        # We are coing to skip non hackathon hacks for now
+        return None
+
+    proj_data['timestamp'] = proj_html.find('time').get('datetime')
 
     return proj_data
 
 if __name__ == '__main__':
     num_cores = multiprocessing.cpu_count()
     p = Pool(num_cores)
-    j = p.map(process_project, enumerate(projects[:1000]))
+    j = p.map(process_project, enumerate(projects[:100]))
+    j = filter(lambda x: x != None, j)
     print "Creating json file"
     with open(OUTPUT_FNAME, "w+") as f:
         f.write(json.dumps(j))
