@@ -27,6 +27,7 @@ block container
         th Project Name
         th Number of Likes
         th Number of Awards
+        th DeepHack rating
     tbody
       each project in tagTopProjects.slice(0, 10)
         tr
@@ -35,4 +36,5 @@ block container
             a(href=project_url)=project.name
           td #{project.num_likes}
           td #{project.num_prizes}
+          td= Math.floor(project.rating*100)/100
 
