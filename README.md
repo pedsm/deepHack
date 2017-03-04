@@ -1,6 +1,8 @@
 # DeepHack
 An deep learning system that will decide the best and easiest way to win some Hackathon swag
 
+![deephack](img/pic.png)
+
 # What is it?
 DeepHack is a system based on big data analysis and deep learning with the focus of analysing the current hackathon scene. The main feature is the big data analysis based on over sixty thousand 'hacks' all hosted on Devpost.
 
