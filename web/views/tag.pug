@@ -4,6 +4,19 @@ block container
   h1 #{tagName} - #{tagPopularity} projects
 
   br
+  div.row
+    div.five.columns
+      div.chart-container
+        canvas#tagAwardRate
+    div.seven.columns
+        p Related tags: 
+        each relatedTag, index in tagRelatedTags.slice(1)
+            - var tag_url = "/tags/" + relatedTag._id
+            a(href=tag_url)=relatedTag._id
+
+            if index != tagRelatedTags.length-2
+              span=", "
+  br
   br
   h3 Top projects tagged #{tagName}
 

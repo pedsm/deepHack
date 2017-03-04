@@ -16,7 +16,7 @@ div.navbar {
     margin-top: 1.2em;
     height: 70%; }
 
-canvas.home-chart {
+canvas.home-chart, canvas.tagAwardRate {
   height: 20em;
   width: 1000px; }
 

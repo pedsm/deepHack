@@ -16,14 +16,18 @@ app.get('/', function (req, res) {
 })
 
 app.get('/tags/:tag', function(req, res) {
-    mpipelines.getProjectsWithTags(req.params.tag,
-            (documents) => res.render('tag',
+    mpipelines.getProjectsWithTags(req.params.tag, function(tagProjects) {
+        mpipelines.getRelatedTags(req.params.tag, function(relatedTags) {
+            res.render('tag',
                 {
                     tagName: req.params.tag,
-                    tagPopularity: documents.length,
-                    tagTopProjects: documents
+                    tagPopularity: tagProjects.length,
+                    tagTopProjects: tagProjects,
+                    tagRelatedTags: relatedTags
                 }
-            ));
+            );
+        });
+    });
 });
 
 

@@ -26,6 +26,23 @@ var popularTagsPipeline = function(callback) {
   );
 }
 
+// Return a list of similar tags
+var getRelatedTags = function(tag_name, callback) {
+  collection.aggregate(
+      [ { "$match"  : { tags : { $in : [tag_name]}}},
+        { "$project": { "_id": 0, "tags": 1 } },
+        { "$unwind" : "$tags" },
+        { "$group"  : { "_id": "$tags", "count": {"$sum":  1} } },
+        { "$sort"   : {"count" : -1 } },
+        { "$limit"  : 10 }
+      ],
+      function(err, results) {
+        assert.equal(err, null);
+        callback(results);
+      }
+  );
+};
+
 // Get the list of projects associated with a tag in decending popularity
 var getProjectsWithTags = function(tag_name, callback) {
     var mres = collection.find({tags: {$in: [tag_name]}})
@@ -33,5 +50,5 @@ var getProjectsWithTags = function(tag_name, callback) {
     mres.toArray((err, documents) => callback(documents));
 }
 
-module.exports = {popularTagsPipeline, getProjectsWithTags}
+module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags}
 

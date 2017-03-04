@@ -32,6 +32,9 @@ function handleChartClick(evt) {
 
 // Chart.js
 var ctx = document.getElementById("recent-hacks");
+var tagctx = document.getElementById("tagAwardRate")
+console.log(tagctx);
+if (ctx) {
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -55,5 +58,33 @@ var myChart = new Chart(ctx, {
         },
         onClick: handleChartClick
     }
+});
+}
+
+var dodata = {
+    labels: [
+        "Red",
+        "Blue",
+        "Yellow"
+    ],
+    datasets: [
+        {
+            data: [300, 50, 100],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
+};
+
+var myDoughnutChart = new Chart(tagctx, {
+    type: 'doughnut',
+    data: dodata
 });
 
