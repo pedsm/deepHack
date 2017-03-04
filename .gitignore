@@ -6,3 +6,7 @@ venv/
 experiments/node_modules
 *.log
 *scssc
+scraper/bkup/
+scraper/node_modules/
+scraper/parser.coffee
+scraper/parser.js

@@ -1,0 +1,34 @@
+extends base.pug
+
+block container
+    h1
+        span Search for 
+        i= q
+
+    //-div.row
+    //-  div.five.columns
+    //-      div.chart-container
+    //-          canvas#tagAwardRate
+    //-              script!="var tagSuccessRate = " + JSON.stringify(tagSuccessRate)
+
+    h2 Projecs
+    table.u-full-width
+        thead
+            tr
+                th Project Name
+                th Project Likes
+                th Project Prizes
+                th DeepHack Score
+        tbody
+            each hack in projects
+                tr
+                    th
+                        a(href="https://devpost.com/software/"+hack.id)= hack.name
+                    th= hack.num_likes
+                    th= hack.num_prizes
+                    th= Math.floor(hack.rating*100)/100
+            else
+                div
+                    h4
+                        i Sorry no hacks were found
+

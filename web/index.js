@@ -22,7 +22,6 @@ app.get('/tags/:tag', function(req, res) {
             mpipelines.getTagSuccessRate(req.params.tag, function(tagSuccessRate){
                 mpipelines.tagTrendsPipeline('javascript', function(trends) {
                     tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
-                    console.log(tagProjects[0].rating)
                     res.render('tag',
                         {
                             tagName: req.params.tag,
@@ -38,6 +37,17 @@ app.get('/tags/:tag', function(req, res) {
         });
     });
 });
+
+app.get('/q/:q',(req,res)=>{
+    var q = req.params.q;
+    mpipelines.getSearchResults(q,(data,tags)=>
+        {
+            if(tags.length > 0)
+                res.redirect('/tags/'+q)
+            else
+                res.render('search',{projects:data,q:q})
+        })
+})
 
 
 app.listen(3000, function () {
