@@ -10,7 +10,11 @@ block container
         canvas#tagAwardRate
         script!="var tagSuccessRate = " + JSON.stringify(tagSuccessRate)
     div.seven.columns
-        p Related tags: 
+      div.chart-container
+        canvas#tagTimedPopularity
+        script!="var tagTimedPopularity = " + []
+      br
+      p Related tags: 
         each relatedTag, index in tagRelatedTags.slice(1)
             - var tag_url = "/tags/" + relatedTag._id
             a(href=tag_url)=relatedTag._id
