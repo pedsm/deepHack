@@ -1,0 +1,24 @@
+extends base.pug
+
+block container
+  h1 #{tagName} - #{tagPopularity} projects
+
+  br
+  br
+  h3 Top projects tagged #{tagName}
+
+  table.u-full-width
+    thead
+      tr
+        th Project Name
+        th Number of Likes
+        th Number of Awards
+    tbody
+      each project in tagTopProjects.slice(0, 10)
+        tr
+          td
+            - var project_url = "https://devpost.com/software/" + project.id
+            a(href=project_url)=project.name
+          td #{project.num_likes}
+          td #{project.num_prizes}
+
