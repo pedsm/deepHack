@@ -3,6 +3,7 @@
 
 import os
 import json
+from multiprocessing import Pool
 from bs4 import BeautifulSoup
 
 OUTPUT_FNAME="devpostdump.json"
@@ -13,7 +14,9 @@ projects = [os.path.join(DUMP_DIR, f) for f in os.listdir(DUMP_DIR)]
 
 projects_json = []
 
-for i, project in enumerate(projects):
+
+def process_project(inp):
+    i, project = inp
     print "%d %s" % (i, project)
 
     proj_html = BeautifulSoup(open(project, 'r').read(), 'html.parser')
@@ -43,9 +46,10 @@ for i, project in enumerate(projects):
         proj_data['hackathon_name'] = hackathon_deets.find('a').string
         proj_data['num_prizes'] = len(hackathon_deets.find_all('span', { 'class' : 'winner' }))
 
-    projects_json.append(proj_data)
+    return proj_data
 
-print json.dumps(projects_json)
-# f = open(OUTPUT_FNAME, "w+")
-# f.write(json.dumps(projects_json))
+if __name__ == '__main__':
+    num_cores = multiprocessing.cpu_count()
+    p = Pool(num_cores)
+    json = p.map(process_project, enumerate(projects[:1000]))
 
