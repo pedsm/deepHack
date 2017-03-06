@@ -16,8 +16,7 @@ projects = [os.path.join(DUMP_DIR, f) for f in os.listdir(DUMP_DIR)]
 projects_json = []
 
 
-def process_project(inp):
-    i, project = inp
+def process_project(i, project):
     print "%d %s" % (i, project)
 
     proj_html = BeautifulSoup(open(project, 'r').read(), 'html.parser')
@@ -59,11 +58,13 @@ def process_project(inp):
     return proj_data
 
 if __name__ == '__main__':
-    num_cores = multiprocessing.cpu_count()
-    p = Pool(num_cores)
-    j = p.map(process_project, enumerate(projects[:100]))
-    j = filter(lambda x: x != None, j)
+
+    finaljson = []
+    for i, proj in enumerate(projects[:100]):
+        finaljson.append(process_project(i, proj))
+
+    finaljson = filter(lambda x: x != None, finaljson)
     print "Creating json file"
     with open(OUTPUT_FNAME, "w+") as f:
-        f.write(json.dumps(j))
+        f.write(json.dumps(finaljson))
 
