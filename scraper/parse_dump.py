@@ -60,7 +60,7 @@ def process_project(i, project):
 if __name__ == '__main__':
 
     finaljson = []
-    for i, proj in enumerate(projects[:100]):
+    for i, proj in enumerate(projects):
         finaljson.append(process_project(i, proj))
 
     finaljson = filter(lambda x: x != None, finaljson)
