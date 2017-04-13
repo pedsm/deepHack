@@ -59,12 +59,13 @@ def process_project(i, project):
 
 if __name__ == '__main__':
 
-    finaljson = []
+    f = open(OUTPUT_FNAME, "w+")
+    f.write("[")
     for i, proj in enumerate(projects):
-        finaljson.append(process_project(i, proj))
+        obj = process_project(i, proj)
+        if obj:
+            f.write(json.dumps(obj))
+            f.write(",")
 
-    finaljson = filter(lambda x: x != None, finaljson)
-    print "Creating json file"
-    with open(OUTPUT_FNAME, "w+") as f:
-        f.write(json.dumps(finaljson))
+    f.write("]")
 
