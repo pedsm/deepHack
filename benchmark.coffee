@@ -1,6 +1,6 @@
 fs   = require 'fs'
-# data = require './output/devpostdump.json'
-data = require './devpostdump.json'
+data = require './output/devpostdump.json' 
+# data = require './devpostdump.json'
 
 console.log "Project count =" + data.length
 
@@ -22,8 +22,8 @@ for hack in data
     likes = hack.num_likes * 2
     comments = hack.num_comments * 2
     tags = hack.tags.length * 2
-    console.log hack.name
-    console.log "Predicted " + (rate(likes, comments,tags))
+    # console.log hack.name
+    # console.log "Predicted " + (rate(likes, comments,tags))
     expected = hack.num_prizes
     expected = 0 if hack.num_prizes == undefined
     # console.log "Expected " + expected*2

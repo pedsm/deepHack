@@ -49,6 +49,7 @@ for l in range(100):
 
 
     sesh = tf.Session(config=tf.ConfigProto(intra_op_parallelism_threads=NUM_THREADS))
+    writter = tf.summary.FileWriter("logs",sesh.graph)
     with sesh.as_default():
         tf.global_variables_initializer().run()
 
