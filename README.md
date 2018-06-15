@@ -13,6 +13,11 @@ We built a web scrapper that scrapes all hacks from Devpost and later on parses 
 The hackathon went fairly easily. However we faced many big data problems along the way, waiting for over an hour for scrappers and parsers to run and even reaching a peak of over 80GB or RAM in use by a single process in our processing server.
 
 # To get running
+To start the project with the data that is already in the repo, uncomment the `mongo-seed` in `docker-compose.yml`. Run `docker-compose up` and wait for the data to be inserted into the db. Then stop docker and uncomment the `mongo-seed` image again.
 
-    mongoimport --db deephack --collection hacks --type json --file pruneddump.json --jsonArray 
+The project is now ready to run with `docker-compose run`.
+
+# To update the data
+The project is most useful when the latest data is used. First you will need to download a copy of all the projects. To do this run the `dump.py` script in the scraper directory (takes about 2 hours). Then run the `parse_dump.py` to extract the latest data (takes about 20 mins). You will be left with a `devpostdump.json` file. Insert this into the mongo database using the mongo-seed image (be careful not to get duplicated data though so make sure to drop the db every time you change the data).
+
 
