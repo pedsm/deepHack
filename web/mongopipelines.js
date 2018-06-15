@@ -5,7 +5,7 @@ var mongo = require('mongodb'),
 
 // Mongo setup
 var MongoClient = mongo.MongoClient
-var mongo_url = "mongodb://localhost:27017/deephack"
+var mongo_url = "mongodb://db:27017/deephack"
 MongoClient.connect(mongo_url, function(err, db) {
     collection = db.collection('hacks');
 });
