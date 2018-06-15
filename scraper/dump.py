@@ -1,10 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 from subprocess import Popen
+import time
 
-# 1 to 2685
-i = 0
-for i in range(1, 101):
+for i in range(1, 3970):
     
     # get page
     r = requests.get("https://devpost.com/software/newest?page=%d" % i)
@@ -23,4 +22,5 @@ for i in range(1, 101):
             # print "%d %s" % (i, project_title)
             # i += 1
 
+    print(i)
 

@@ -11,3 +11,8 @@ We built a web scrapper that scrapes all hacks from Devpost and later on parses 
 
 # The problems
 The hackathon went fairly easily. However we faced many big data problems along the way, waiting for over an hour for scrappers and parsers to run and even reaching a peak of over 80GB or RAM in use by a single process in our processing server.
+
+# To get running
+
+    mongoimport --db deephack --collection hacks --type json --file pruneddump.json --jsonArray 
+

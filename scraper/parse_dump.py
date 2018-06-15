@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Simple script to parse the devpost dump and place results in a json
 
 import os
@@ -10,14 +10,12 @@ from bs4 import BeautifulSoup
 OUTPUT_FNAME="devpostdump.json"
 DUMP_DIR = "output/"
 
-projects = [os.path.join(DUMP_DIR, f) for f in os.listdir(DUMP_DIR)]
-# projects = projects[:100]
-
-projects_json = []
 
 
-def process_project(i, project):
-    print "%d %s" % (i, project)
+def process_project(project_and_iter):
+    i, project = project_and_iter
+
+    print("{} {}".format(i, project))
 
     proj_html = BeautifulSoup(open(project, 'r').read(), 'html.parser')
 
@@ -55,17 +53,26 @@ def process_project(i, project):
     else:
         return None
 
-    return proj_data
+    with open(OUTPUT_FNAME, 'a+') as f:
+        f.write(json.dumps(proj_data) + '\n')
 
 if __name__ == '__main__':
 
-    f = open(OUTPUT_FNAME, "w+")
-    f.write("[")
-    for i, proj in enumerate(projects):
-        obj = process_project(i, proj)
-        if obj:
-            f.write(json.dumps(obj))
-            f.write(",")
+    projects = [os.path.join(DUMP_DIR, f) for f in os.listdir(DUMP_DIR)]
 
-    f.write("]")
+    if os.path.exists(OUTPUT_FNAME):
+        os.remove(OUTPUT_FNAME)
+
+    with Pool() as p:
+        p.map(process_project, enumerate(projects), chunksize=1)
+
+        # f = open(OUTPUT_FNAME, "w+")
+        # f.write("[")
+        # for i, proj in enumerate(projects):
+            # obj = process_project(i, proj)
+            # if obj:
+                # f.write(json.dumps(obj))
+                # f.write(",")
+
+        # f.write("]")
 
