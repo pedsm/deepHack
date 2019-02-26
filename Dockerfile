@@ -7,7 +7,10 @@ WORKDIR /usr/src/app
 COPY web/ .
 RUN yarn
 
+ENV PORT=80
+
 # Expose ports
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["npm", "start"]
+
