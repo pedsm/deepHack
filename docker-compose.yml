@@ -2,7 +2,7 @@ version: "3"
 
 services:
     deephack:
-        build: ./web
+        build: .
         ports: ["8080:8080"]
         volumes:
             - ./web:/usr/src/app

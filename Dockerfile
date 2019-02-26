@@ -4,7 +4,7 @@ FROM node:9-alpine
 WORKDIR /usr/src/app
 
 # Copy package.json and install deps
-COPY . .
+COPY web/ .
 RUN yarn
 
 # Expose ports
