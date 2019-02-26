@@ -5,7 +5,7 @@ var mongo = require('mongodb'),
 
 // Mongo setup. Connect with retry.
 var MongoClient = mongo.MongoClient
-var mongo_url = "mongodb://db:27017/deephack"
+var mongo_url = process.env.MONGO_URL || "mongodb://db:27017/deephack"
 function connectWithRetry() {
     MongoClient.connect(mongo_url,// { reconnectInterval: 2,  },
         (err, db) => {
