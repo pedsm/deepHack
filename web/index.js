@@ -10,31 +10,33 @@ app.set('view engine', 'pug')
 app.use('/static', express.static('static'))
 
 app.get('/', function (req, res) {
-    mpipelines.popularTagsPipeline(function(results) {
+    mpipelines.popularTagsPipeline().then(results => {
         res.render('index', { title : 'this is my title', popularTags:results })
+    }).catch(err => {
+        res.render('index', { err })
     });
 })
 
-app.get('/tags/:tag', function(req, res) {
-    mpipelines.getProjectsWithTags(req.params.tag, function(tagProjects) {
-        mpipelines.getRelatedTags(req.params.tag, function(relatedTags) {
-            mpipelines.getTagSuccessRate(req.params.tag, function(tagSuccessRate){
-                mpipelines.tagTrendsPipeline(req.params.tag, function(trends) {
-                    tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
-                    res.render('tag',
-                        {
-                            tagName: req.params.tag,
-                            tagPopularity: tagProjects.length,
-                            tagTopProjects: tagProjects,
-                            tagRelatedTags: relatedTags,
-                            tagSuccessRate: tagSuccessRate,
-                            tagTrenddata: trends
-                        }
-                    );
-                });
-            });
-        });
-    });
+app.get('/tags/:tag', async function(req, res) {
+    try {
+        const tagProjects = await mpipelines.getProjectsWithTags(req.params.tag);
+        const relatedTags = await mpipelines.getRelatedTags(req.params.tag);
+        let tagSuccessRate = await mpipelines.getTagSuccessRate(req.params.tag);
+        const trends = await mpipelines.tagTrendsPipeline(req.params.tag);
+
+        tagSuccessRate = tagSuccessRate.filter((x)=>x._id != null).slice(0, 3);
+        res.render('tag', {
+                tagName: req.params.tag,
+                tagPopularity: tagProjects.length,
+                tagTopProjects: tagProjects,
+                tagRelatedTags: relatedTags,
+                tagSuccessRate: tagSuccessRate,
+                tagTrenddata: trends
+            }
+        );
+    } catch (err) {
+        res.render('tag', { err })
+    }
 });
 
 app.get('/q/:q',(req,res)=>{

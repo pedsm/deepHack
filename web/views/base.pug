@@ -23,7 +23,10 @@ html
         div.row
           div.twelve.columns
             input#search-box.u-full-width(type="text" placeholder="Search...")
-      block container
+      if err
+        pre #{err.stack}
+      else
+        block container
 
     script!="var popularTags = " + JSON.stringify(popularTags)
     script(src="/static/granim.min.js")
