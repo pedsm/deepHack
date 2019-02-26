@@ -1,6 +1,5 @@
 var express = require('express'),
     pug = require('pug'),
-    mongo = require('mongodb'),
     assert = require('assert'),
     mpipelines = require('./mongopipelines'),
     score = require('./score.js').rate()

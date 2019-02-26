@@ -3,12 +3,20 @@ var mongo = require('mongodb'),
     collection = null,
     rate = require('./score.js').rate
 
-// Mongo setup
+// Mongo setup. Connect with retry.
 var MongoClient = mongo.MongoClient
 var mongo_url = "mongodb://db:27017/deephack"
-MongoClient.connect(mongo_url, function(err, db) {
-    collection = db.collection('hacks');
-});
+function connectWithRetry() {
+    MongoClient.connect(mongo_url,// { reconnectInterval: 2,  },
+        (err, db) => {
+        if (err) {
+            console.error(err.message);
+            return connectWithRetry();
+        }
+        collection = db.collection('hacks');
+    });
+}
+connectWithRetry();
 
 
 // Get list of top 10 tags
