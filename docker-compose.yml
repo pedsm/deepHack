@@ -7,11 +7,6 @@ services:
         volumes:
             - ./web:/usr/src/app
 
-    #mongo-seed:
-        #build: ./mongo-seed
-        #links:
-            #- db
-
     db:
         image: mongo:3.5
         ports: ['27018:27017']
