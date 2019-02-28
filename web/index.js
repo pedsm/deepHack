@@ -5,7 +5,8 @@ var express = require('express'),
     score = require('./score.js').rate()
     scraper = require('./scraper');
 
-scraper()
+// Start the scraper
+scraper();
 
 var app = express();
 app.locals.pretty = true;
