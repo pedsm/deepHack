@@ -134,9 +134,17 @@ var getSearchResults = function(query, callback)
 }
 
 var getDataStats = async function() {
-    return new Promise((resolve, reject) => {
-        const stats = collection.stats();
-        resolve(stats);
+    return new Promise(async (resolve, reject) => {
+        const stats = await collection.stats();
+        const newestTimestamp = (await collection.find().sort({ _id: 1 }).limit(1).toArray())[0].timestamp;
+        const oldestTimestamp = (await collection.find().sort({ _id: -1 }).limit(1).toArray())[0].timestamp;
+        console.log(oldestTimestamp);
+        console.log(newestTimestamp);
+        resolve({
+            newestTimestamp: new Date(newestTimestamp),
+            oldestTimestamp: new Date(oldestTimestamp),
+            count: stats.count,
+        });
     });
 }
 

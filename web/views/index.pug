@@ -6,21 +6,12 @@ block container
       h3 Most popular tags
       canvas#recent-hacks.home-chart
   div.content
-    h1 What is deephack? 
-    p Deephack is a project built in 24, and it takes over 40000 hacks submitted to devpost and analyses them using a deeplearnign model. Based on that it calculates a deephack score.
-    h2 How to use deephack?
-    p Simply look for a project title or a tag('lower case characters') if this tag matches a devpost tag you will get in depth information on that tag, otherwise deephack will give projects the match the title of the search.
+    h3 What is deephack? 
+    p Deephack was a project built in 24 hours that provides insight into the trends in technology of over 100,000 different hackathon projects from the website Devpost.com. Deephack has a page for almost every software or service. Deephack is constantly updating its index which allows you to view the changes in popularity of different technologies. It was created by <a href="https://twitter.com/jonnyballs_">@jonnyballs_</a> and <a href="https://twitter.com/pedsm">@pedsm</a>
+    h3 How to use deephack?
+    p Simply search for a project title or tag (programming language, tool etc.). If your search term matches a tag, you will be taken to a page detailing the trends in popularity of the technology as well as related tags and the most popular projects under that tag.
     h3 Deephack score
-    p The deephack score is based on a couple of factors and it isn't reliable as a prediction method. However after the hackathon is over deephack has over 75% of accuracy on predicting the amount of prizes a hack won. Incredibly high numbers occur due to some hackathons having a much higher number of participants.
-    h3 I can't find my hack
-    p Because training neural networks is an time consuming task, and we were not able to fully automate the process deephack is in a static state. New hacks are not updated since it's creation. However if you are interested on this project submit an issue on our repo and we might update or even automate the whole system. 
-      a(href="https://github.com/pedsm/deephack") Github
-    h3 Full features
-    ol
-      li Deephack score calculation
-      li Tag info(Win rate)
-      li Tag correlation
-      li Most used tags 
+    p The Deephack score is a special score designed to indicate the quality of a project. The scores are calculated using a deep learning model which predicts likelihood of hackathon success (e.g. chance of winning) based on various pieces of metadata. The model has over 75% of accuracy on predicting the amount of prizes a hack won. The highest scoring hacks are often the winners of the biggest or most competitive hackathons.
     h3 Dataset
     table.u-full-width
       thead
@@ -29,5 +20,12 @@ block container
           th Value
       tbody
         tr
-          td No. hackathons
+          td Number of hackathons
           td #{dataStats.count}
+        tr
+          td Latest hack
+          td #{dataStats.newestTimestamp}
+        tr
+          td Oldest hack
+          td #{dataStats.oldestTimestamp}
+
