@@ -120,7 +120,7 @@ async function saveProject(projectSlug) {
 
     const doc = {
         'id': projectSlug,
-        'title': $('#app-title').text(),
+        'name': $('#app-title').text(),
         'num_likes': parseInt($('.like-button > .side-count').first().text().trim()) || 0,
         'num_comments': parseInt($('.lsoftware-comment-button > .side-count').first().text().trim()) || 0,
         'description_length': $('.app-details').text().length,
