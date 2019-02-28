@@ -1,5 +1,5 @@
 # DeepHack
-An deep learning system that will decide the best and easiest way to win some Hackathon swag
+An deep learning system that will decide the best and easiest way to win some Hackathon swag. Check it out at [deephack.jnthn.uk](http://deephack.jnthn.uk).
 
 ![deephack](/screenshot.png)
 
