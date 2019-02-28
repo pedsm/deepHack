@@ -124,6 +124,13 @@ async function saveProject(projectSlug) {
         'id': projectSlug,
         'title': $('#app-title').text(),
         'num_likes': parseInt($('.like-button > .side-count').first().text().trim()) || 0,
+        'num_comments': parseInt($('.lsoftware-comment-button > .side-count').first().text().trim()) || 0,
+        'description_length': $('.app-details').text().length,
+        'num_contributors': $('li.software-team-member').length,
+        'tags': $('span.cp-tag').map((i, e) => $(e).text()).get().sort(),
+        'hackathon_name': $('a', '.software-list-content').first().text() || null,
+        'num_prizes': $('span.winner', '.software-list-content').length,
+        'timestamp': $('time').first().attr('datetime'),
     }
     console.log(doc);
 
