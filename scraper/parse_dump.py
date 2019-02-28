@@ -66,13 +66,3 @@ if __name__ == '__main__':
     with Pool() as p:
         p.map(process_project, enumerate(projects), chunksize=1)
 
-        # f = open(OUTPUT_FNAME, "w+")
-        # f.write("[")
-        # for i, proj in enumerate(projects):
-            # obj = process_project(i, proj)
-            # if obj:
-                # f.write(json.dumps(obj))
-                # f.write(",")
-
-        # f.write("]")
-

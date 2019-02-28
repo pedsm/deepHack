@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.0",
     "mongodb": "^2.2.24",
     "pug": "^2.0.0-beta11"
