@@ -3,6 +3,9 @@ var express = require('express'),
     assert = require('assert'),
     mpipelines = require('./mongopipelines'),
     score = require('./score.js').rate()
+    scraper = require('./scraper');
+
+scraper()
 
 var app = express();
 app.locals.pretty = true;
