@@ -61,7 +61,7 @@ async function scraper() {
         if (max_page - min_page <= 1) {
             console.log("Filling cache from page ", max_page, " onwards");
             await scrapeFromPageForwards(max_page);
-            break;
+            return;
         }
         let midPage = Math.floor((min_page+max_page) / 2);
         const pageProjects = await getSoftwareLinks(midPage);
@@ -76,8 +76,6 @@ async function scraper() {
             max_page = midPage;
         }
     }
-
-    console.log(max_page);
 }
 
 async function getNumberOfSoftwarePages() {
@@ -130,7 +128,7 @@ async function saveProject(projectSlug) {
         'tags': $('span.cp-tag').map((i, e) => $(e).text()).get().sort(),
         'hackathon_name': $('a', '.software-list-content').first().text() || null,
         'num_prizes': $('span.winner', '.software-list-content').length,
-        'timestamp': $('time').first().attr('datetime'),
+        'timestamp': new Date($('time').first().attr('datetime')),
     }
     console.log(doc);
 
