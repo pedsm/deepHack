@@ -44,7 +44,7 @@ async function scraper() {
     console.log('Starting scraper');
 
     // First get the newest projects 
-    // await scrapeFromPageForwards(0)
+    await scrapeFromPageForwards(0)
 
     await sleep(1000);
     // Whether to fetch old pages
@@ -119,14 +119,13 @@ async function getSoftwareLinks(pageNum) {
 async function saveProject(projectSlug) {
     const r = await axios.get(`https://devpost.com/software/${projectSlug}`);
     const $ = cheerio.load(r.data);
-    console.log('Fetched project ' + projectSlug);
-
-    console.log(await collection.findOne({ id: projectSlug }));
 
     const doc = {
         'id': projectSlug,
         'title': $('#app-title').text(),
+        'num_likes': parseInt($('.like-button > .side-count').first().text().trim()) || 0,
     }
+    console.log(doc);
 
     await collection.insert(doc);
 }
