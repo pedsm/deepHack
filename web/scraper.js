@@ -61,7 +61,8 @@ async function scraper() {
         if (max_page - min_page <= 1) {
             console.log("Filling cache from page ", max_page, " onwards");
             await scrapeFromPageForwards(max_page);
-            // Start again
+            // Sleep 60 seconds and try again
+            await sleep(60000);
             scraper();
         }
         let midPage = Math.floor((min_page+max_page) / 2);

@@ -138,8 +138,6 @@ var getDataStats = async function() {
         const stats = await collection.stats();
         const newestTimestamp = (await collection.find().sort({ _id: 1 }).limit(1).toArray())[0].timestamp;
         const oldestTimestamp = (await collection.find().sort({ _id: -1 }).limit(1).toArray())[0].timestamp;
-        console.log(oldestTimestamp);
-        console.log(newestTimestamp);
         resolve({
             newestTimestamp: new Date(newestTimestamp),
             oldestTimestamp: new Date(oldestTimestamp),
