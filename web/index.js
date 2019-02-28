@@ -13,12 +13,14 @@ app.locals.pretty = true;
 app.set('view engine', 'pug')
 app.use('/static', express.static('static'))
 
-app.get('/', function (req, res) {
-    mpipelines.popularTagsPipeline().then(results => {
-        res.render('index', { title : 'this is my title', popularTags:results })
-    }).catch(err => {
+app.get('/', async function (req, res) {
+    try {
+        const popularTags = await mpipelines.popularTagsPipeline();
+        const dataStats = await mpipelines.getDataStats();
+        res.render('index', { popularTags, dataStats })
+    } catch (err) {
         res.render('index', { err })
-    });
+    }
 })
 
 app.get('/tags/:tag', async function(req, res) {

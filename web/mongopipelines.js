@@ -133,6 +133,13 @@ var getSearchResults = function(query, callback)
         })
 }
 
+var getDataStats = async function() {
+    return new Promise((resolve, reject) => {
+        const stats = collection.stats();
+        resolve(stats);
+    });
+}
 
-module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate, getSearchResults, tagTrendsPipeline}
+
+module.exports = {popularTagsPipeline, getProjectsWithTags, getRelatedTags, getTagSuccessRate, getSearchResults, tagTrendsPipeline, getDataStats}
 
