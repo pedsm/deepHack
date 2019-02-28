@@ -70,7 +70,6 @@ async function scraper() {
             return !!(await collection.findOne({ id: project.projectSlug }));
         }))).reduce((prev, curr) => prev && curr);
 
-        console.log({min_page, midPage, max_page, allProjectsSaved});
         if (allProjectsSaved) {
             min_page = midPage;
         } else {
@@ -131,7 +130,7 @@ async function saveProject(projectSlug) {
         'num_prizes': $('span.winner', '.software-list-content').length,
         'timestamp': new Date($('time').first().attr('datetime')),
     }
-    console.log(doc);
+    console.log("Updating page " + projectSlug);
 
     await collection.insert(doc);
 }
