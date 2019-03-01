@@ -116,24 +116,29 @@ async function getSoftwareLinks(pageNum) {
 }
 
 async function saveProject(projectSlug) {
-    const r = await axios.get(`https://devpost.com/software/${projectSlug}`);
-    const $ = cheerio.load(r.data);
-
-    const doc = {
-        'id': projectSlug,
-        'name': $('#app-title').text(),
-        'num_likes': parseInt($('.like-button > .side-count').first().text().trim()) || 0,
-        'num_comments': parseInt($('.lsoftware-comment-button > .side-count').first().text().trim()) || 0,
-        'description_length': $('.app-details').text().length,
-        'num_contributors': $('li.software-team-member').length,
-        'tags': $('span.cp-tag').map((i, e) => $(e).text()).get().sort(),
-        'hackathon_name': $('a', '.software-list-content').first().text() || null,
-        'num_prizes': $('span.winner', '.software-list-content').length,
-        'timestamp': new Date($('time').first().attr('datetime')),
-    }
     console.log("Updating page " + projectSlug);
+    try {
+        const r = await axios.get(`https://devpost.com/software/${projectSlug}`);
+        const $ = cheerio.load(r.data);
 
-    await collection.insert(doc);
+        const doc = {
+            'id': projectSlug,
+            'name': $('#app-title').text(),
+            'num_likes': parseInt($('.like-button > .side-count').first().text().trim()) || 0,
+            'num_comments': parseInt($('.lsoftware-comment-button > .side-count').first().text().trim()) || 0,
+            'description_length': $('.app-details').text().length,
+            'num_contributors': $('li.software-team-member').length,
+            'tags': $('span.cp-tag').map((i, e) => $(e).text()).get().sort(),
+            'hackathon_name': $('a', '.software-list-content').first().text() || null,
+            'num_prizes': $('span.winner', '.software-list-content').length,
+            'timestamp': new Date($('time').first().attr('datetime')),
+        }
+
+        await collection.insert(doc);
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 module.exports = scraper;
+
