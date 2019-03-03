@@ -89,6 +89,8 @@ async function getNumberOfSoftwarePages() {
 async function scrapeFromPageForwards(pageNum) {
     while (true) {
         const pageProjects = await getSoftwareLinks(pageNum);
+        if (!pageProjects.length) break;
+
         const allProjectsSaved = (await Promise.all(pageProjects.map(async (project) => {
             return !!(await collection.findOne({ id: project.projectSlug }));
         }))).reduce((prev, curr) => prev && curr);
