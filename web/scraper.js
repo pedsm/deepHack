@@ -49,7 +49,9 @@ async function scraper() {
     await sleep(1000);
     // Whether to fetch old pages
     if (await collection.findOne({ id: FINAL_PROJECT })) {
-        console.log("Scraping finished");
+        console.log("Finished scraping. Will try again in 1 minute.");
+        await sleep(60000);
+        scraper();
         return;
     }
 
