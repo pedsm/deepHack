@@ -120,6 +120,10 @@ async function getSoftwareLinks(pageNum) {
 }
 
 async function saveProject(projectSlug) {
+    if (await collections.findOne({id: projectSlug})) {
+        return;
+    }
+
     console.log("Updating page " + projectSlug);
     try {
         const r = await axios.get(`https://devpost.com/software/${projectSlug}`);
