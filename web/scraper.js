@@ -120,7 +120,7 @@ async function getSoftwareLinks(pageNum) {
 }
 
 async function saveProject(projectSlug) {
-    if (await collections.findOne({id: projectSlug})) {
+    if (await collection.findOne({id: projectSlug})) {
         return;
     }
 
