@@ -27,7 +27,7 @@ function handleChartClick(evt) {
     var index = activeElement[0]._index;
     var url = "/tags/" + popularTags[index]._id;
 
-    window.location.replace(url);
+    window.location.href = url;
 }
 
 // Chart.js
